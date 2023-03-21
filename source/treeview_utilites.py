@@ -60,9 +60,9 @@ class Treeview(ttk.Treeview):
         for col in columns:
             self.heading(col, text=col)
 
-        df_rows = dataframe.tolist()
-        for row in df_rows:
-            self.insert("", "end", values=row)
+        #df_rows = dataframe.tolist()
+        for index, row in dataframe.iterrows():
+            self.insert("", "end", values=row.values.tolist())
         return None
 
     def pop_up_value(self, item):
@@ -83,32 +83,12 @@ class Treeview(ttk.Treeview):
         # 'C:/Users/Owner/Downloads/RandomStock Tickers.csv C:/Users/Owner/Downloads/RandomStockTickers.csv'
         size = len(filename)
         print(f'_parse_drop_files: {filename}')
-        res = []  # list of file paths
-        name = ""
-        idx = 0
-        while idx < size:
-            if filename[idx] == "{":
-                j = idx + 1
-                while filename[j] != "}":
-                    name += filename[j]
-                    j += 1
-                res.append(name)
-                name = ""
-                idx = j
-            elif filename[idx] == " " and name != "":
-                res.append(name)
-                name = ""
-            elif filename[idx] != " ":
-                name += filename[idx]
-            idx += 1
-        if name != "":
-            res.append(name)
-        return res
+        return filename
 
     def drop_in_table(self, event):
         file_path = self._parse_drop_files(event.data)
         print('drop')
-        if file_path[0].endswith(".csv"):
+        if file_path.endswith(".csv"):
             # path_object = Path(file_path)
             # file_name = path_object.name
             df = pd.read_csv(file_path)

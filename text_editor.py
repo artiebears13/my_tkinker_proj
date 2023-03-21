@@ -65,5 +65,5 @@ if __name__ == '__main__':
     exit_button = tk.Button(window, text="Exit", command=window.destroy)
     exit_button.grid(row=3, column=0, columnspan=2, sticky='nsew')
 
-    window.tk_focusFollowsMouse()
+    # window.tk_focusFollowsMouse()
     window.mainloop()
