@@ -108,7 +108,7 @@ class Treeview(ttk.Treeview):
     def drop_in_table(self, event):
         file_path = self._parse_drop_files(event.data)
         print('drop')
-        if file_path.endswith(".csv"):
+        if file_path[0].endswith(".csv"):
             # path_object = Path(file_path)
             # file_name = path_object.name
             df = pd.read_csv(file_path)
