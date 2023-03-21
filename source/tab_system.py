@@ -13,7 +13,8 @@ class TabSystem(ttk.Notebook):
         self.add(self.tab_csv, text='csv')
         self.grid(row=row, rowspan=rowspan, column=column)
         create_notepad(self.tab_txt)
-        treeview = Treeview(parent=self.tab_csv)
+        treeview = Treeview(parent=self.tab_csv, height=10)
+
 
     # def data_table(self):
 

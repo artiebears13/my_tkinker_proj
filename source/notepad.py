@@ -56,15 +56,16 @@ def create_notepad(frame, theme='white', add_buttons=False):
 def pop_up_notebook(theme='white'):
     window = tk.Toplevel()
     window.wm_title("Window")
-
+    frame = tk.Frame(window)
+    txt_field = create_notepad(frame)
     menubar = tk.Menu(window, bg='white')
     window.config(menu=menubar)
     file_menu = tk.Menu(menubar)
-    # file_menu.add_command(label='New notepad', command=pop_up_notebook)
+    file_menu.add_command(label='Open',
+                          command=lambda: click_button_open_file(text_field=txt_field))
     # file_menu.add_separator()
-    file_menu.add_command(label='Open', command=click_button_open_file)
-    # file_menu.add_separator()
-    file_menu.add_command(label='Save', command=click_button_save_file)
+    file_menu.add_command(label='Save',
+                          command=lambda: click_button_save_file(text_field=txt_field))
     # file_menu.add_separator()
     file_menu.add_command(label='Exit', command=window.destroy)
     menubar.add_cascade(
@@ -76,8 +77,7 @@ def pop_up_notebook(theme='white'):
     # win.geometry('500x500')
     window.configure(bg=theme)
 
-    frame = tk.Frame(window)
-    txt_field = create_notepad(frame)
+
     frame.pack()
     b = ttk.Button(window, text="close", command=lambda: save_and_destroy(window, txt_field))
     b.pack(side='bottom')

@@ -6,12 +6,20 @@ from pathlib import Path
 
 
 class Treeview(ttk.Treeview):
-    def __init__(self, *, parent,
+    def __init__(self, *,
+                 parent,
                  row: int = 0,
                  column: int = 0,
                  rowspan: int = 1,
-                 columns: set = ('parameter', 'value')):
-        super().__init__(parent, columns=columns, show='headings', height=10, selectmode='browse')
+                 columns: set = ('parameter', 'value'),
+                 height: int = 10,
+                 sticky: str="nsew"):
+        super().__init__(
+            parent,
+            columns=columns,
+            show='headings',
+            height=height,
+            selectmode='browse')
         self.heading('parameter', text='Параметр')
         self.heading('value', text='Значение')
         self.data = []
@@ -20,15 +28,9 @@ class Treeview(ttk.Treeview):
         self.init_data()
         self.add_scrollbar(parent, row, column, rowspan)
         self.stored_dataframe = pd.DataFrame()
-        # self.file_names_listbox.place(relheight=1, relwidth=0.25)
-        # self.file_names_listbox = tk.Listbox(parent, selectmode=tk.SINGLE, background="darkgray")
-        # self.file_names_listbox.place(relheight=0.1, relwidth=0.25)
-        # self.file_names_listbox.drop_target_register(DND_FILES)
-        # self.file_names_listbox.dnd_bind("<<Drop>>", self.detect)
-        # self.file_names_listbox.bind("<Double-1>", self.detect)
         self.drop_target_register(DND_FILES)
-        self.dnd_bind("<<Drop>>", self.detect)
-        self.grid(row=row, rowspan=rowspan, column=column, sticky='wsew')
+        self.dnd_bind("<<Drop>>", self.drop_in_table)
+        self.grid(row=row, rowspan=rowspan, column=column, sticky=sticky)
         # self.dnd_bind("<<Drop>>", self.drop_in_table)
 
     def detect(self, event):

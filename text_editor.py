@@ -3,22 +3,7 @@ from source.treeview_utilites import *
 from source.menu_utilites import *
 from source.tab_system import *
 from tkinterdnd2 import DND_FILES, TkinterDnD
-
-
-# def table_viewer(table: ttk.Treeview, dataframe: pd.DataFrame):
-#     scroll_Y = tk.Scrollbar(frame, orient='vertical', command=frame.yview)
-#     scroll_X = tk.Scrollbar(frame, orient='horizontal', command=frame.xview)
-#     table.configure(yscrollcommand=scroll_Y.set, xscrollcommand=scroll_X.set)
-#     scroll_Y.pack(side="right", fill="y")
-#     scroll_X.pack(side="bottom", fill="x")
-#     table.stored_dataframe = dataframe
-#     columns = list(dataframe.columns)
-#     table.__setitem__('column', columns)
-#     table.__setitem__('show', columns)
-#     for col in columns:
-#         table.heading(col, text=col)
-#
-#     rows = dataframe.
+from source.label_button_frame import *
 
 
 def set_up_window(root_window):
@@ -30,6 +15,11 @@ def set_up_window(root_window):
     root_window.bind('<Escape>', window.destroy)
 
 
+def show_info(label, data):
+    top_window = tk.Toplevel()
+    top_window.wm_title("Window")
+    _label = tk.Label(top_window, text=f'{label}:  {data}\n');
+    _label.pack()
 
 
 if __name__ == '__main__':
@@ -43,34 +33,37 @@ if __name__ == '__main__':
     window.config(menu=menubar)
     set_up_menu(menubar=menubar, window=window)
 
-    # treeview_frame = tk.Frame(window, bg=theme_color)
-    treeview = Treeview(parent=window,row=0,column=0)
-
-    # treeview_frame2 = tk.Frame(window, bg=theme_color)
-    # create_treeview(treeview_frame2)
-
-    # notepad.grid(row=0, rowspan=2, column=1, sticky='nsew')
+    treeview = Treeview(parent=window, row=0, column=0)
 
     print(window.__dir__())
-    # print(window.winfo_children()[0].configure(bg='black'))
+    theme_button = tk.Button(window,
+                             text='change theme',
+                             command=lambda: change_theme(window))
+    tab_system = TabSystem(parent=window, row=0, rowspan=2, column=1)
+    theme_button.grid(row=2, column=0)
+    insert_data_frame = UserData(parent=window,
+                                 row=1,
+                                 column=0,
+                                 sticky="nsew")
+    insert_data_frame.add_insert_frame(row=0,
+                                       column=0,
+                                       label_text='name',
+                                       button_text='ok',
+                                       command=show_info)
 
-    # tab_system = ttk.Notebook(window)
-    # tab_txt = tk.Frame(tab_system)
-    # tab_csv = tk.Frame(tab_system)
-    # create_notepad(tab_txt)
-    #
-    # tab_system.add(tab_txt, text='txt')
-    # tab_system.add(tab_csv, text='csv')
+    insert_data_frame.add_insert_frame(row=1,
+                                       column=0,
+                                       label_text='surname',
+                                       button_text='ok',
+                                       command=show_info)
+    insert_data_frame.add_insert_frame(row=2,
+                                       column=0,
+                                       label_text='age',
+                                       button_text='ok',
+                                       command=show_info)
 
-    # frame_theme_button = tk.Frame(window)
-    theme_button = tk.Button(window, text='change theme', command=lambda: change_theme(window))
-    # treeview_frame.grid(row=0, column=0, sticky='ns')
-    # treeview_frame2.grid(row=1, column=0, sticky='s')
-    # tab_system.grid(row=0, rowspan=2, column=1)
-    tab_system = TabSystem(parent=window,row=0, rowspan=2, column=1)
-    theme_button.grid(row=3, column=0)
-    # print(notepad.winfo_children()[0].widgetName, type(notepad.winfo_children()[0].widgetName))
-    # print(dir(tk))
+    exit_button = tk.Button(window, text="Exit", command=window.destroy)
+    exit_button.grid(row=3, column=0, columnspan=2, sticky='nsew')
 
     window.tk_focusFollowsMouse()
     window.mainloop()
