@@ -47,7 +47,7 @@ def create_notepad(frame, theme='white', add_buttons=False):
         buttons.pack(side='top')
     txt_field.pack(side='left')
     txt_field.bind('<Control-s>', lambda action: click_button_save_file(text_field=txt_field))
-    txt_field.bind('<Control-o>', lambda action: click_button_save_file(text_field=txt_field))
+    txt_field.bind('<Control-o>', lambda action: click_button_open_file(text_field=txt_field))
     txt_field.focus()
     scrollbar = ttk.Scrollbar(frame, orient=tk.VERTICAL, command=txt_field.yview)
     txt_field.configure(yscroll=scrollbar.set)
