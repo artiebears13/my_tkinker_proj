@@ -32,8 +32,8 @@ class Treeview(ttk.Treeview):
         self.add_scrollbar(parent, row, column, rowspan)
         # self.add_horiz_scrollbar(parent, row, column, rowspan)
         self.stored_dataframe = pd.DataFrame()
-        # df = pd.read_excel('data.xlsx')
-        df = pd.read_excel('result.xlsx')
+        df = pd.read_excel('data.xlsx')
+        # df = pd.read_excel('result.xlsx')
         self.set_datatable(df)
         self.drop_target_register(DND_FILES)
         self.dnd_bind("<<Drop>>", self.drop_in_table)
@@ -111,10 +111,10 @@ class Treeview(ttk.Treeview):
     def drop_in_table(self, event):
         file_path = self._parse_drop_files(event.data)
         print('drop')
-        if file_path.endswith(".csv"):
+        if file_path.endswith(".xlsx"):
             # path_object = Path(file_path)
             # file_name = path_object.name
-            df = pd.read_csv(file_path)
+            df = pd.read_excel(file_path)
             self.set_datatable(dataframe=df)
             # if file_name not in current_listbox_items:
             #     self.file_names_listbox.insert("end", file_name)

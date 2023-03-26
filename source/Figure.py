@@ -71,18 +71,18 @@ class Plot(tk.Frame):
         # placing the toolbar on the Tkinter window
         canvas.get_tk_widget().pack()
 
-    def plot_task_2(self, x1,x2, y):
+    def plot_task_2(self, x,y1, y2):
         fig = Figure(figsize=(10, 5),
                      dpi=100)
 
         plot1 = fig.add_subplot(121)
-        plot1.scatter(x1,y, s=5)
+        plot1.scatter(x,y1, s=5)
         plot1.set_xlabel('Время')
         plot1.set_ylabel('Вес')
         plot1.set_title('Вес блока от времени')
 
         plot2 = fig.add_subplot(122)
-        plot2.scatter(x2, y, s=5)
+        plot2.scatter(x, y2, s=5)
         plot2.set_xlabel('Время')
         plot2.set_ylabel('Глубина БК')
         plot2.set_title('Глубина от времени')
